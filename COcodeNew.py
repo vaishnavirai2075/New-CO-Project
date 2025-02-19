@@ -125,3 +125,14 @@ def assemble_jtype(parts, labels, current_address):
         imm = binary_convert(int(parts[2]) - 1, 20)
     opcode = instructions_dict[parts[0]]["opcode"]
     return imm[9] + imm[1:9] + imm[10:20] + imm[0] + rd + opcode
+
+
+# taking input and handling label
+
+i_file_path = "ip.txt"
+o_file_path = "op.txt"
+
+def read_file(file_path):
+    with open(file_path, 'r') as file:
+        machine_code_instructions = [line.strip() for line in file.readlines()]
+    return machine_code_instructions
