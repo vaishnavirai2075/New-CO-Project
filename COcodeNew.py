@@ -46,3 +46,28 @@ def binary_convert(decimal, num_bits):
         binary = bin(decimal & int("1" * num_bits, 2))[2:]    #this is for negative numbers, we represent them using two's complement
         return binary
 
+#making list of each instrction and identifying its type
+
+def assemble(instruction, labels, current_address):
+    parts = instruction.replace(",", " ").replace("(", " ").replace(")", "").split()  # first we make a list of the instruction
+    
+    if parts[0] == 'lw':
+        parts[2], parts[3] = parts[3], parts[2]  # this is done to smoothly handle lw operation as we switch in it
+    
+    instr_type = instructions_dict[parts[0]]["type"] #now we make a variable to determine instruction type
+    
+    if instr_type == "R":
+        return assemble_rtype(parts)
+    elif instr_type == "I":
+        return assemble_itype(parts, labels, current_address)
+    elif instr_type == "S":
+        return assemble_stype(parts)
+    elif instr_type == "B":
+        return assemble_btype(parts, labels, current_address)
+    elif instr_type == "U":
+        return assemble_utype(parts)
+    elif instr_type == "J":
+        return assemble_jtype(parts, labels, current_address)
+    else:
+        return "ERROR"
+
