@@ -35,3 +35,14 @@ registers_dict = {
     "s8": "11000", "s9": "11001", "s10": "11010", "s11": "11011", "t3": "11100",
     "t4": "11101", "t5": "11110", "t6": "11111"
 }
+
+#Binary conversion given by Naveen
+
+def binary_convert(decimal, num_bits):  
+    if decimal >= 0:
+        binary = bin(decimal)[2:]     #used inbuilt function and removed the first twocharacters
+        return binary.zfill(num_bits)
+    else:
+        binary = bin(decimal & int("1" * num_bits, 2))[2:]    #this is for negative numbers, we represent them using two's complement
+        return binary
+
