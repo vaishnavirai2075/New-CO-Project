@@ -90,3 +90,23 @@ def assemble_itype(parts, labels, current_address):   #here we need to do binary
         imm = binary_convert(int(parts[3]), 12)
     opcode = instructions_dict[parts[0]]["opcode"]
     return imm + rs1 + funct3 + rd + opcode
+
+def assemble_stype(parts):                                        # here we do binary conversion then do slicing and join simultaneously
+    funct3 = instructions_dict[parts[0]]["funct3"]
+    rs1 = registers_dict[parts[3]]
+    rs2 = registers_dict[parts[1]]
+    imm = binary_convert(int(parts[2]), 12)
+    opcode = instructions_dict[parts[0]]["opcode"]
+    return imm[:7] + rs2 + rs1 + funct3 + imm[7:] + opcode
+
+def assemble_btype(parts, labels, current_address):
+    funct3 = instructions_dict[parts[0]]["funct3"]
+    rs1 = registers_dict[parts[1]]
+    rs2 = registers_dict[parts[2]]
+    if parts[3] in labels:                                       #we check in label
+        offset = (labels[parts[3]] - current_address) // 2
+    else:
+        offset = int(parts[3]) // 2
+    imm = binary_convert(offset, 13)
+    opcode = instructions_dict[parts[0]]["opcode"]
+    return imm[0] + imm[2:8] + rs2 + rs1 + funct3 + imm[8:12] + imm[1] + opcode
