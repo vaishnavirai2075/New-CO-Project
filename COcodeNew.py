@@ -157,3 +157,13 @@ def lable_handle(machine_code_instructions):
 
 machine_code_instructions = read_file(i_file_path)
 labels = lable_handle(machine_code_instructions)
+
+with open(o_file_path, "w") as f:
+    current_address = 0
+    for instruction in machine_code_instructions:
+        if ":" in instruction:
+            instruction = instruction.split(":")[1].strip()
+        if instruction:
+            assembled_code = assemble(instruction, labels, current_address)
+            f.write(assembled_code + "\n")
+            current_address += 4
