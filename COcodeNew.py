@@ -79,3 +79,14 @@ def assemble_rtype(parts):                              #we map all registers to
     rs2 = registers_dict[parts[3]]
     opcode = instructions_dict[parts[0]]["opcode"]
     return funct7 + rs2 + rs1 + funct3 + rd + opcode
+
+def assemble_itype(parts, labels, current_address):   #here we need to do binary conversion to get immediate 
+    funct3 = instructions_dict[parts[0]]["funct3"]
+    rd = registers_dict[parts[1]]                             
+    rs1 = registers_dict[parts[2]]
+    if parts[3] in labels:                                              #we check for labels here 
+        imm = binary_convert(labels[parts[3]] - current_address, 12)
+    else:
+        imm = binary_convert(int(parts[3]), 12)
+    opcode = instructions_dict[parts[0]]["opcode"]
+    return imm + rs1 + funct3 + rd + opcode
