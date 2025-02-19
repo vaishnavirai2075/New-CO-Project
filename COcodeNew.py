@@ -136,3 +136,24 @@ def read_file(file_path):
     with open(file_path, 'r') as file:
         machine_code_instructions = [line.strip() for line in file.readlines()]
     return machine_code_instructions
+
+def lable_handle(machine_code_instructions):
+    labels = {}
+    current_address = 0
+    index = 0 
+
+    while index < len(machine_code_instructions):  
+        instruction = machine_code_instructions[index]   #we have made a separate dictionary for lable so that we can easily refer to it
+
+        if ":" in instruction:
+            label = instruction.split(":")[0]
+            labels[label] = current_address
+        else:
+            current_address += 4  
+
+        index += 1  
+    
+    return labels
+
+machine_code_instructions = read_file(i_file_path)
+labels = lable_handle(machine_code_instructions)
