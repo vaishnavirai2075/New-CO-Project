@@ -116,3 +116,12 @@ def assemble_utype(parts):
     imm = binary_convert(int(parts[2]), 20)
     opcode = instructions_dict[parts[0]]["opcode"]
     return imm + rd + opcode
+
+def assemble_jtype(parts, labels, current_address):
+    rd = registers_dict[parts[1]]
+    if parts[2] in labels:
+        imm = binary_convert(labels[parts[2]] - current_address, 20)
+    else:
+        imm = binary_convert(int(parts[2]) - 1, 20)
+    opcode = instructions_dict[parts[0]]["opcode"]
+    return imm[9] + imm[1:9] + imm[10:20] + imm[0] + rd + opcode
