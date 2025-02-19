@@ -71,3 +71,11 @@ def assemble(instruction, labels, current_address):
     else:
         return "ERROR"
 
+def assemble_rtype(parts):                              #we map all registers to their corresponding binary code and join it up and return it
+    funct3 = instructions_dict[parts[0]]["funct3"]
+    funct7 = instructions_dict[parts[0]]["funct7"]
+    rd = registers_dict[parts[1]]
+    rs1 = registers_dict[parts[2]]
+    rs2 = registers_dict[parts[3]]
+    opcode = instructions_dict[parts[0]]["opcode"]
+    return funct7 + rs2 + rs1 + funct3 + rd + opcode
