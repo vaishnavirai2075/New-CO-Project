@@ -110,3 +110,9 @@ def assemble_btype(parts, labels, current_address):
     imm = binary_convert(offset, 13)
     opcode = instructions_dict[parts[0]]["opcode"]
     return imm[0] + imm[2:8] + rs2 + rs1 + funct3 + imm[8:12] + imm[1] + opcode
+
+def assemble_utype(parts):
+    rd = registers_dict[parts[1]]
+    imm = binary_convert(int(parts[2]), 20)
+    opcode = instructions_dict[parts[0]]["opcode"]
+    return imm + rd + opcode
